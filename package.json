@@ -53,6 +53,7 @@
 		},
 		"./package.json": "./package.json"
 	},
+	"sideEffects": false,
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/tonghoangvu/read-vietnamese-number-js.git"
