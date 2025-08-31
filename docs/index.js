@@ -2,7 +2,7 @@ import {
 	InvalidNumberError,
 	ReadingConfig,
 	doReadNumber,
-} from 'https://unpkg.com/read-vietnamese-number'
+} from 'https://cdn.jsdelivr.net/npm/read-vietnamese-number/+esm'
 
 const number = document.getElementById('number')
 const result = document.getElementById('result')

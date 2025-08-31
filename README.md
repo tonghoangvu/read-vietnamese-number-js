@@ -1,5 +1,6 @@
 # read-vietnamese-number
 
+[![](https://data.jsdelivr.com/v1/package/npm/read-vietnamese-number/badge?style=rounded)](https://www.jsdelivr.com/package/npm/read-vietnamese-number)
 [![Check Code](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/check-code.yml/badge.svg)](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/check-code.yml)
 [![Publish Package](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/publish-package.yml/badge.svg)](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/publish-package.yml)
 [![Deploy Site](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/deploy-site.yml/badge.svg)](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/deploy-site.yml)
@@ -35,11 +36,11 @@ yarn add read-vietnamese-number
 ```
 
 Hoặc sử dụng trực tiếp trong browser thông qua CDN (hoặc tự host).
-Chú ý nên kèm theo version cố định trong CDN URL, ví dụ như https://unpkg.com/read-vietnamese-number@2.0.0 (không phải version mới nhất).
+Chú ý nên kèm theo version cố định trong CDN URL, ví dụ như https://cdn.jsdelivr.net/npm/read-vietnamese-number@2.0.0/+esm (đây không phải version mới nhất).
 
 ```html
 <script type="module">
-  import {} from 'https://unpkg.com/read-vietnamese-number'
+  import {} from 'https://cdn.jsdelivr.net/npm/read-vietnamese-number/+esm'
   // ...
 </script>
 ```
