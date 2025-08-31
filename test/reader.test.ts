@@ -33,6 +33,15 @@ describe('Read the last two digits function', () => {
 		expect(readLastTwoDigits(config, 8, 2)).toEqual(['tám', 'mươi', 'hai'])
 		expect(readLastTwoDigits(config, 8, 0)).toEqual(['tám', 'mươi'])
 	})
+
+	it('Should return without ten tone', () => {
+		const config = new ReadingConfig()
+		config.skipTenTone = true
+
+		expect(readLastTwoDigits(config, 9, 0)).toEqual(['chín', 'mươi'])
+		expect(readLastTwoDigits(config, 9, 3)).toEqual(['chín', 'ba'])
+		expect(readLastTwoDigits(config, 9, 5)).toEqual(['chín', 'lăm'])
+	})
 })
 
 describe('Read three digits function', () => {

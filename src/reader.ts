@@ -33,7 +33,10 @@ export function readLastTwoDigits(config: ReadingConfig, b: Digit, c: Digit): st
 			break
 		}
 		default: {
-			output.push(config.digits[b], config.tenToneText)
+			output.push(config.digits[b])
+			if (!config.skipTenTone || c === 0) {
+				output.push(config.tenToneText)
+			}
 			if (c === 1) {
 				output.push(config.oneToneText)
 			} else if (c === 4) {

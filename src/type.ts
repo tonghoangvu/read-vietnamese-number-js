@@ -44,4 +44,7 @@ export class ReadingConfig {
 	public fourToneText = 'tư' // tư/bốn
 	public fiveToneText = 'lăm'
 	public tenToneText = 'mươi'
+
+	// Conditional options
+	public skipTenTone = false
 }
