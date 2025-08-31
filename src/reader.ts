@@ -14,21 +14,12 @@ import { splitToDigits, trimLeft, trimRight, validateNumber } from './util.js'
  * @param config the reading configuration
  * @param b the digit in the tens place
  * @param c the digit in the units place
- * @param readZeroTen whether to read "zero" in the tens place (only apply for the fractional part)
  * @returns an array of words
  */
-export function readLastTwoDigits(
-	config: ReadingConfig,
-	b: Digit,
-	c: Digit,
-	readZeroTen: boolean
-): string[] {
+export function readLastTwoDigits(config: ReadingConfig, b: Digit, c: Digit): string[] {
 	const output: string[] = []
 	switch (b) {
 		case 0: {
-			if (readZeroTen && c !== 0) {
-				output.push(config.digits[b])
-			}
 			output.push(config.digits[c])
 			break
 		}
@@ -86,7 +77,7 @@ export function readThreeDigits(
 		}
 		output.push(config.oddText)
 	}
-	output.push(...readLastTwoDigits(config, b, c, false))
+	output.push(...readLastTwoDigits(config, b, c))
 	return output
 }
 
@@ -221,7 +212,10 @@ export function readFractionalPart(config: ReadingConfig, digits: Digit[]): stri
 	switch (digits.length) {
 		case 2: {
 			const [b, c] = digits
-			output.push(...readLastTwoDigits(config, b, c, true))
+			if (b === 0 && c !== 0) {
+				output.push(config.digits[b])
+			}
+			output.push(...readLastTwoDigits(config, b, c))
 			break
 		}
 		case 3: {
