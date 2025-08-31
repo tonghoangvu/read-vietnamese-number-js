@@ -5,12 +5,12 @@ export type InputNumber = string | bigint
 /**
  * The base error class for all errors in the library.
  */
-export class RvnError extends Error {}
+export class ReadVietnameseNumberError extends Error {}
 
 /**
  * The error class used when the input number is invalid.
  */
-export class InvalidNumberError extends RvnError {}
+export class InvalidNumberError extends ReadVietnameseNumberError {}
 
 export interface NumberData {
 	isNegative: boolean

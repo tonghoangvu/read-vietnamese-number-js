@@ -79,7 +79,7 @@ try {
 
 ### Error handling
 
-Thư viện ném ra 2 loại `RvnError` sau nếu có lỗi trong quá trình đọc số:
+Thư viện ném ra 2 loại `ReadVietnameseNumberError` sau nếu có lỗi trong quá trình đọc số:
 
 - `TypeError` khi input không hợp lệ
 - `InvalidNumberError` khi số chứa ký tự không hợp lệ
