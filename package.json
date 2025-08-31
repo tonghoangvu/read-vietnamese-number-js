@@ -4,6 +4,7 @@
 	"version": "2.2.2",
 	"license": "MIT",
 	"scripts": {
+		"verify": "npm run lint && npm run test && npm run build",
 		"format": "prettier -w --ignore-path .gitignore .",
 		"lint": "prettier -c --ignore-path .gitignore . && eslint --max-warnings 0 --ignore-path .gitignore .",
 		"test": "jest --coverage",
