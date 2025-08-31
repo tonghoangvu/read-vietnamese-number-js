@@ -254,7 +254,7 @@ export function readNumber(config: ReadingConfig, numberData: NumberData): strin
 		output.unshift(config.negativeText)
 	}
 	output.push(...config.unit)
-	return output.join(config.separator)
+	return output.filter((value) => value !== '').join(config.separator)
 }
 
 /**
