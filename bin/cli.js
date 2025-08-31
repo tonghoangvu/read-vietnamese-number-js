@@ -12,7 +12,7 @@ if (number) {
 function read(number) {
 	try {
 		const config = new ReadingConfig()
-		const result = doReadNumber(config, number)
+		const result = doReadNumber(number, config)
 		console.log(result)
 	} catch (error) {
 		console.error(error.message)

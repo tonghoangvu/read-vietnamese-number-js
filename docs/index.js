@@ -17,7 +17,7 @@ function handleInput() {
 	const value = number['value'] ?? ''
 	try {
 		const config = new ReadingConfig()
-		const output = doReadNumber(config, value)
+		const output = doReadNumber(value, config)
 		updateResult(value, output, true)
 	} catch (error) {
 		if (error instanceof InvalidNumberError) {

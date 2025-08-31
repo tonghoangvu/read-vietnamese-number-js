@@ -65,7 +65,7 @@ config.unit = ['đồng']
 try {
   // Start reading
   const number = '-12345.6789'
-  const result = doReadNumber(config, number)
+  const result = doReadNumber(number, config)
   console.log(result)
 } catch (err) {
   // Handle errors

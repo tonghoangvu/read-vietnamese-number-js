@@ -262,11 +262,14 @@ export function readNumber(config: ReadingConfig, numberData: NumberData): strin
 /**
  * Validate, parse, and read the input number.
  *
- * @param config the reading configuration
  * @param number the input number
+ * @param config the reading configuration
  * @returns a string representation of the number
  */
-export function doReadNumber(config: ReadingConfig, number: InputNumber): string {
+export function doReadNumber(
+	number: InputNumber,
+	config: ReadingConfig = new ReadingConfig()
+): string {
 	const validatedNumber = validateNumber(number)
 	const numberData = parseNumberData(config, validatedNumber)
 	return readNumber(config, numberData)

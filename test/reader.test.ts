@@ -250,64 +250,68 @@ describe('Do read number function', () => {
 	config.unit = []
 
 	it('Should throw TypeError', () => {
-		expect(() => doReadNumber(config, null as any as string)).toThrow(TypeError)
-		expect(() => doReadNumber(config, -0.12345 as any as string)).toThrow(TypeError)
+		expect(() => doReadNumber(null as any as string, config)).toThrow(TypeError)
+		expect(() => doReadNumber(-0.12345 as any as string, config)).toThrow(TypeError)
 		expect(() =>
 			// eslint-disable-next-line no-loss-of-precision
-			doReadNumber(config, -1234567890123456789012 as any as string)
+			doReadNumber(-1234567890123456789012 as any as string, config)
 		).toThrow(TypeError)
 	})
 
 	it('Should throw InvalidNumberError', () => {
-		expect(() => doReadNumber(config, '1..23')).toThrow(InvalidNumberError)
-		expect(() => doReadNumber(config, '--1.23')).toThrow(InvalidNumberError)
-		expect(() => doReadNumber(config, '12_3')).toThrow(InvalidNumberError)
-		expect(() => doReadNumber(config, 'abc123')).toThrow(InvalidNumberError)
+		expect(() => doReadNumber('1..23', config)).toThrow(InvalidNumberError)
+		expect(() => doReadNumber('--1.23', config)).toThrow(InvalidNumberError)
+		expect(() => doReadNumber('12_3', config)).toThrow(InvalidNumberError)
+		expect(() => doReadNumber('abc123', config)).toThrow(InvalidNumberError)
 	})
 
 	it('Should return zero', () => {
-		expect(doReadNumber(config, '')).toBe('không')
-		expect(doReadNumber(config, '0')).toBe('không')
-		expect(doReadNumber(config, '000')).toBe('không')
-		expect(doReadNumber(config, '00.')).toBe('không')
-		expect(doReadNumber(config, '.00')).toBe('không')
-		expect(doReadNumber(config, '000.00')).toBe('không')
+		expect(doReadNumber('', config)).toBe('không')
+		expect(doReadNumber('0', config)).toBe('không')
+		expect(doReadNumber('000', config)).toBe('không')
+		expect(doReadNumber('00.', config)).toBe('không')
+		expect(doReadNumber('.00', config)).toBe('không')
+		expect(doReadNumber('000.00', config)).toBe('không')
 	})
 
 	it('Should return integer value', () => {
-		expect(doReadNumber(config, '02')).toBe('hai')
-		expect(doReadNumber(config, '15')).toBe('mười lăm')
-		expect(doReadNumber(config, '321')).toBe('ba trăm hai mươi mốt')
-		expect(doReadNumber(config, '4065')).toBe('bốn nghìn không trăm sáu mươi lăm')
-		expect(doReadNumber(config, '06000')).toBe('sáu nghìn')
-		expect(doReadNumber(config, '1000024')).toBe('một triệu không trăm hai mươi tư')
-		expect(doReadNumber(config, '23010000')).toBe('hai mươi ba triệu không trăm mười nghìn')
-		expect(doReadNumber(config, '2030000305')).toBe(
+		expect(doReadNumber('02', config)).toBe('hai')
+		expect(doReadNumber('15', config)).toBe('mười lăm')
+		expect(doReadNumber('321', config)).toBe('ba trăm hai mươi mốt')
+		expect(doReadNumber('4065', config)).toBe('bốn nghìn không trăm sáu mươi lăm')
+		expect(doReadNumber('06000', config)).toBe('sáu nghìn')
+		expect(doReadNumber('1000024', config)).toBe('một triệu không trăm hai mươi tư')
+		expect(doReadNumber('23010000', config)).toBe('hai mươi ba triệu không trăm mười nghìn')
+		expect(doReadNumber('2030000305', config)).toBe(
 			'hai tỉ không trăm ba mươi triệu ba trăm lẻ năm'
 		)
-		expect(doReadNumber(config, '00,123,456')).toBe(
+		expect(doReadNumber('00,123,456', config)).toBe(
 			'một trăm hai mươi ba nghìn bốn trăm năm mươi sáu'
 		)
-		expect(doReadNumber(config, '1,200,000,000,000')).toBe('một nghìn hai trăm tỉ')
-		expect(doReadNumber(config, '1,200,300,000,000,000')).toBe(
+		expect(doReadNumber('1,200,000,000,000', config)).toBe('một nghìn hai trăm tỉ')
+		expect(doReadNumber('1,200,300,000,000,000', config)).toBe(
 			'một triệu hai trăm nghìn ba trăm tỉ'
 		)
-		expect(doReadNumber(config, '1,200,300,400,000,000,000')).toBe(
+		expect(doReadNumber('1,200,300,400,000,000,000', config)).toBe(
 			'một tỉ hai trăm triệu ba trăm nghìn bốn trăm tỉ'
 		)
-		expect(doReadNumber(config, '12,345,678,900,000,000,000')).toBe(
+		expect(doReadNumber('12,345,678,900,000,000,000', config)).toBe(
 			'mười hai tỉ ba trăm bốn mươi lăm triệu sáu trăm bảy mươi tám nghìn chín trăm tỉ'
 		)
 	})
 
 	it('Should return double value', () => {
-		expect(doReadNumber(config, '304.23')).toBe('ba trăm lẻ bốn chấm hai mươi ba')
-		expect(doReadNumber(config, '-0003.804')).toBe('âm ba chấm tám trăm lẻ bốn')
-		expect(doReadNumber(config, '-0.00001')).toBe('âm không chấm không không không không một')
-		expect(doReadNumber(config, '-123,456.7,89')).toBe(
+		expect(doReadNumber('304.23', config)).toBe('ba trăm lẻ bốn chấm hai mươi ba')
+		expect(doReadNumber('-0003.804', config)).toBe('âm ba chấm tám trăm lẻ bốn')
+		expect(doReadNumber('-0.00001', config)).toBe('âm không chấm không không không không một')
+		expect(doReadNumber('-123,456.7,89', config)).toBe(
 			'âm một trăm hai mươi ba nghìn bốn trăm năm mươi sáu chấm bảy trăm tám mươi chín'
 		)
-		expect(doReadNumber(config, '000100.01')).toBe('một trăm chấm không một')
-		expect(doReadNumber(config, '000100.10')).toBe('một trăm chấm một')
+		expect(doReadNumber('000100.01', config)).toBe('một trăm chấm không một')
+		expect(doReadNumber('000100.10', config)).toBe('một trăm chấm một')
+	})
+
+	it('Should use the default reading config', () => {
+		expect(doReadNumber('100')).toBe('một trăm đơn vị')
 	})
 })
