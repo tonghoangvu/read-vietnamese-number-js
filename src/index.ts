@@ -2,3 +2,4 @@ import { InvalidNumberError, ReadVietnameseNumberError, ReadingConfig } from './
 import { doReadNumber } from './reader.js'
 
 export { InvalidNumberError, ReadVietnameseNumberError, ReadingConfig, doReadNumber }
+export default doReadNumber
