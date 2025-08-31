@@ -1,5 +1,6 @@
 # read-vietnamese-number
 
+[![](https://data.jsdelivr.com/v1/package/npm/read-vietnamese-number/badge?style=rounded)](https://www.jsdelivr.com/package/npm/read-vietnamese-number)
 [![Check Code](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/check-code.yml/badge.svg)](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/check-code.yml)
 [![Publish Package](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/publish-package.yml/badge.svg)](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/publish-package.yml)
 [![Deploy Site](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/deploy-site.yml/badge.svg)](https://github.com/tonghoangvu/read-vietnamese-number-js/actions/workflows/deploy-site.yml)
