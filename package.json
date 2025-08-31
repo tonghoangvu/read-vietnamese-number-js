@@ -37,6 +37,7 @@
 	"type": "module",
 	"types": "./dist/cjs/index.d.ts",
 	"main": "./dist/cjs/index.js",
+	"browser": "./dist/esm/index.js",
 	"exports": {
 		".": {
 			"import": {
