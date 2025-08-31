@@ -6,7 +6,7 @@
 	"scripts": {
 		"format": "prettier -w --ignore-path .gitignore .",
 		"lint": "prettier -c --ignore-path .gitignore . && eslint --max-warnings 0 --ignore-path .gitignore .",
-		"test": "jest",
+		"test": "jest --coverage",
 		"clean": "del-cli -v dist/ coverage/ *.tgz",
 		"build": "tsc -b && cpy package-cjs.json dist/cjs --rename=package.json",
 		"dryrun": "npm publish --dry-run && npm pack -q"

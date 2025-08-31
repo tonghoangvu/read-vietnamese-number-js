@@ -2,7 +2,6 @@ import type { Config } from 'jest'
 
 const config: Config = {
 	preset: 'ts-jest/presets/default-esm',
-	collectCoverage: true,
 	collectCoverageFrom: ['./src/**'],
 	coveragePathIgnorePatterns: ['./src/index.ts'],
 	coverageThreshold: {
