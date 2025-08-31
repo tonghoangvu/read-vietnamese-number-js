@@ -92,34 +92,28 @@ describe('Trim redundant zeros function', () => {
 })
 
 describe('Add leading zeros to fit period function', () => {
-	const config = new ReadingConfig()
-	config.unit = []
-
 	it('Should not change', () => {
-		expect(addLeadingZerosToFitPeriod(config, '')).toBe('')
-		expect(addLeadingZerosToFitPeriod(config, '257')).toBe('257')
-		expect(addLeadingZerosToFitPeriod(config, '123456')).toBe('123456')
+		expect(addLeadingZerosToFitPeriod('')).toBe('')
+		expect(addLeadingZerosToFitPeriod('257')).toBe('257')
+		expect(addLeadingZerosToFitPeriod('123456')).toBe('123456')
 	})
 
 	it('Should have the length divisible by 3', () => {
-		expect(addLeadingZerosToFitPeriod(config, '1')).toBe('001')
-		expect(addLeadingZerosToFitPeriod(config, '23')).toBe('023')
-		expect(addLeadingZerosToFitPeriod(config, '1234')).toBe('001234')
-		expect(addLeadingZerosToFitPeriod(config, '12345')).toBe('012345')
+		expect(addLeadingZerosToFitPeriod('1')).toBe('001')
+		expect(addLeadingZerosToFitPeriod('23')).toBe('023')
+		expect(addLeadingZerosToFitPeriod('1234')).toBe('001234')
+		expect(addLeadingZerosToFitPeriod('12345')).toBe('012345')
 	})
 })
 
 describe('Zip integral digits function', () => {
-	const config = new ReadingConfig()
-	config.unit = []
-
 	it('Should return no period', () => {
-		expect(zipIntegralPeriods(config, [])).toEqual([])
+		expect(zipIntegralPeriods([])).toEqual([])
 	})
 
 	it('Should return one period with zeros', () => {
-		expect(zipIntegralPeriods(config, [1, 2, 3])).toEqual([[1, 2, 3]])
-		expect(zipIntegralPeriods(config, [1, 2, 3, 4, 5, 6])).toEqual([
+		expect(zipIntegralPeriods([1, 2, 3])).toEqual([[1, 2, 3]])
+		expect(zipIntegralPeriods([1, 2, 3, 4, 5, 6])).toEqual([
 			[1, 2, 3],
 			[4, 5, 6],
 		])

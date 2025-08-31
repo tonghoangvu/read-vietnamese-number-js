@@ -22,25 +22,26 @@ export interface NumberData {
  * The reading configuration class containing default options for reading numbers.
  */
 export class ReadingConfig {
-	public separator = ' '
-	public unit = ['đơn', 'vị']
+	public static readonly PERIOD_SIZE = 3
+	public static readonly FILLED_DIGIT = '0'
+
+	// Input parsing options
 	public negativeSign = '-'
-	public pointSign = '.'
-	public thousandSign = ','
-	public periodSize = 3
-	public filledDigit = '0'
+	public pointSign = '.' // point/comma
+	public thousandSign = ',' // comma/point/space
 
-	public digits = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín']
-	public units = [[], ['nghìn'], ['triệu'], ['tỉ']]
-
-	public negativeText = 'âm'
-	public pointText = 'chấm'
-	public oddText = 'lẻ'
+	// Output building options
+	public separator = ' ' // space/newline/tab
+	public unit = ['đơn', 'vị'] // đơn vị/đồng
+	public units = [[], ['nghìn'], ['triệu'], ['tỉ']] // nghìn/ngàn, tỉ/tỷ
+	public digits = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'] // bảy/bẩy
+	public negativeText = 'âm' // âm/trừ
+	public pointText = 'chấm' // chấm/phẩy
+	public oddText = 'lẻ' // lẻ/linh
 	public tenText = 'mười'
 	public hundredText = 'trăm'
-
 	public oneToneText = 'mốt'
-	public fourToneText = 'tư'
+	public fourToneText = 'tư' // tư/bốn
 	public fiveToneText = 'lăm'
 	public tenToneText = 'mươi'
 }
