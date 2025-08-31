@@ -1,4 +1,4 @@
-import { Digit, InputNumber, InvalidFormatError } from './type.js'
+import { Digit, InputNumber } from './type.js'
 
 /**
  * Remove the given character from the left side of the string.
@@ -55,7 +55,7 @@ export function splitToDigits(str: string): Digit[] | null {
  *
  * @param value the input number
  * @returns a string representation of the number
- * @throws InvalidFormatError if the input number is not in a valid type
+ * @throws TypeError if the input number is not in a valid type
  */
 export function validateNumber(value: InputNumber): string {
 	switch (typeof value) {
@@ -70,7 +70,7 @@ export function validateNumber(value: InputNumber): string {
 			// Some numbers may cause errors when in parsing process:
 			// - Loss precision: Number.isInteger(value) && !Number.isSafeInteger(value)
 			// - Cannot parse scientific notation: value.toString().includes('e')
-			throw new InvalidFormatError('Invalid format')
+			throw new TypeError('The input number must be of type string or bigint')
 		}
 	}
 }

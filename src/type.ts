@@ -8,11 +8,6 @@ export type InputNumber = string | bigint
 export class RvnError extends Error {}
 
 /**
- * The error class used when the input number is not in a valid type.
- */
-export class InvalidFormatError extends RvnError {}
-
-/**
  * The error class used when the input number is invalid.
  */
 export class InvalidNumberError extends RvnError {}

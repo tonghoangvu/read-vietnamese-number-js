@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, expect, it } from '@jest/globals'
 import { splitToDigits, trimLeft, trimRight, validateNumber } from '../src/util.js'
-import { InvalidFormatError } from '../src/type.js'
 
 describe('Trim left function', () => {
 	it('Should return empty', () => {
@@ -70,13 +69,13 @@ describe('Validate number function', () => {
 		expect(validateNumber(11111111111111111111112345n)).toBe('11111111111111111111112345')
 	})
 
-	it('Should throw InvalidFormatError', () => {
-		expect(() => validateNumber(1 as any as string)).toThrow(InvalidFormatError)
-		expect(() => validateNumber({} as string)).toThrow(InvalidFormatError)
-		expect(() => validateNumber(null as any as string)).toThrow(InvalidFormatError)
-		expect(() => validateNumber(undefined as any as string)).toThrow(InvalidFormatError)
-		expect(() => validateNumber(false as any as bigint)).toThrow(InvalidFormatError)
-		expect(() => validateNumber(Symbol('test') as any as bigint)).toThrow(InvalidFormatError)
-		expect(() => validateNumber((() => 'test') as any as bigint)).toThrow(InvalidFormatError)
+	it('Should throw TypeError', () => {
+		expect(() => validateNumber(1 as any as string)).toThrow(TypeError)
+		expect(() => validateNumber({} as string)).toThrow(TypeError)
+		expect(() => validateNumber(null as any as string)).toThrow(TypeError)
+		expect(() => validateNumber(undefined as any as string)).toThrow(TypeError)
+		expect(() => validateNumber(false as any as bigint)).toThrow(TypeError)
+		expect(() => validateNumber(Symbol('test') as any as bigint)).toThrow(TypeError)
+		expect(() => validateNumber((() => 'test') as any as bigint)).toThrow(TypeError)
 	})
 })

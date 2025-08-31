@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { InvalidFormatError, InvalidNumberError, NumberData, ReadingConfig } from '../src/type.js'
+import { InvalidNumberError, NumberData, ReadingConfig } from '../src/type.js'
 import {
 	addLeadingZerosToFitPeriod,
 	doReadNumber,
@@ -249,13 +249,13 @@ describe('Do read number function', () => {
 	const config = new ReadingConfig()
 	config.unit = []
 
-	it('Should throw InvalidFormatError', () => {
-		expect(() => doReadNumber(config, null as any as string)).toThrow(InvalidFormatError)
-		expect(() => doReadNumber(config, -0.12345 as any as string)).toThrow(InvalidFormatError)
+	it('Should throw TypeError', () => {
+		expect(() => doReadNumber(config, null as any as string)).toThrow(TypeError)
+		expect(() => doReadNumber(config, -0.12345 as any as string)).toThrow(TypeError)
 		expect(() =>
 			// eslint-disable-next-line no-loss-of-precision
 			doReadNumber(config, -1234567890123456789012 as any as string)
-		).toThrow(InvalidFormatError)
+		).toThrow(TypeError)
 	})
 
 	it('Should throw InvalidNumberError', () => {
