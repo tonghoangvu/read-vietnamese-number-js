@@ -53,17 +53,17 @@ export function splitToDigits(str: string): Digit[] | null {
 /**
  * Validate the given input number and convert it to a string.
  *
- * @param value the input number
+ * @param number the input number
  * @returns a string representation of the number
  * @throws TypeError if the input number is not in a valid type
  */
-export function validateNumber(value: InputNumber): string {
-	switch (typeof value) {
+export function validateNumber(number: InputNumber): string {
+	switch (typeof number) {
 		case 'string': {
-			return value
+			return number
 		}
 		case 'bigint': {
-			return value.toString()
+			return number.toString()
 		}
 		default: {
 			// Throw error on number, object, undefined, boolean, symbol, function

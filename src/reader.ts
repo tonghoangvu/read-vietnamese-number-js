@@ -20,6 +20,7 @@ export function readLastTwoDigits(config: ReadingConfig, b: Digit, c: Digit): st
 	const output: string[] = []
 	switch (b) {
 		case 0: {
+			// In case b is 0, the parent function is responsible for reading b in some way or not
 			output.push(config.digits[c])
 			break
 		}
