@@ -58,7 +58,7 @@
 	"sideEffects": false,
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/tonghoangvu/read-vietnamese-number-js.git"
+		"url": "https://github.com/tonghoangvu/read-vietnamese-number-js"
 	},
 	"homepage": "https://tonghoangvu.github.io/read-vietnamese-number-js/",
 	"author": {
