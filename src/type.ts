@@ -2,21 +2,6 @@ export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 export type Period = [Digit, Digit, Digit]
 export type InputNumber = string | bigint
 
-/**
- * The base error class for all errors in the library.
- */
-export class RvnError extends Error {}
-
-/**
- * The error class used when the input number is not in a valid type.
- */
-export class InvalidFormatError extends RvnError {}
-
-/**
- * The error class used when the input number is invalid.
- */
-export class InvalidNumberError extends RvnError {}
-
 export interface NumberData {
 	isNegative: boolean
 	integralPart: Period[]
@@ -24,28 +9,42 @@ export interface NumberData {
 }
 
 /**
+ * The base error class for all errors in the library.
+ */
+export class ReadVietnameseNumberError extends Error {}
+
+/**
+ * The error class used when the input number is invalid.
+ */
+export class InvalidNumberError extends ReadVietnameseNumberError {}
+
+/**
  * The reading configuration class containing default options for reading numbers.
  */
 export class ReadingConfig {
-	public separator = ' '
-	public unit = ['đơn', 'vị']
-	public negativeSign = '-'
-	public pointSign = '.'
-	public thousandSign = ','
-	public periodSize = 3
-	public filledDigit = '0'
+	static readonly PERIOD_SIZE = 3
+	static readonly FILLED_DIGIT = '0'
 
-	public digits = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín']
-	public units = [[], ['nghìn'], ['triệu'], ['tỉ']]
+	// Input parsing options
+	negativeSign = '-'
+	pointSign = '.' // point/comma
+	thousandSign = ',' // comma/point/space
 
-	public negativeText = 'âm'
-	public pointText = 'chấm'
-	public oddText = 'lẻ'
-	public tenText = 'mười'
-	public hundredText = 'trăm'
+	// Output building options
+	separator = ' ' // space/newline/tab
+	unit = ['đơn', 'vị'] // đơn vị/đồng
+	units = [[], ['nghìn'], ['triệu'], ['tỉ']] // nghìn/ngàn, tỉ/tỷ
+	digits = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'] // bảy/bẩy
+	negativeText = 'âm' // âm/trừ
+	pointText = 'chấm' // chấm/phẩy
+	oddText = 'lẻ' // lẻ/linh
+	tenText = 'mười'
+	hundredText = 'trăm'
+	oneToneText = 'mốt'
+	fourToneText = 'tư' // tư/bốn
+	fiveToneText = 'lăm'
+	tenToneText = 'mươi'
 
-	public oneToneText = 'mốt'
-	public fourToneText = 'tư'
-	public fiveToneText = 'lăm'
-	public tenToneText = 'mươi'
+	// Conditional options
+	skipTenTone = false
 }

@@ -14,21 +14,13 @@ import { splitToDigits, trimLeft, trimRight, validateNumber } from './util.js'
  * @param config the reading configuration
  * @param b the digit in the tens place
  * @param c the digit in the units place
- * @param readZeroTen whether to read "zero" in the tens place (only apply for the fractional part)
  * @returns an array of words
  */
-export function readLastTwoDigits(
-	config: ReadingConfig,
-	b: Digit,
-	c: Digit,
-	readZeroTen: boolean
-): string[] {
+export function readLastTwoDigits(config: ReadingConfig, b: Digit, c: Digit): string[] {
 	const output: string[] = []
 	switch (b) {
 		case 0: {
-			if (readZeroTen && c !== 0) {
-				output.push(config.digits[b])
-			}
+			// In case b is 0, the parent function is responsible for reading b in some way or not
 			output.push(config.digits[c])
 			break
 		}
@@ -42,7 +34,10 @@ export function readLastTwoDigits(
 			break
 		}
 		default: {
-			output.push(config.digits[b], config.tenToneText)
+			output.push(config.digits[b])
+			if (!config.skipTenTone || c === 0) {
+				output.push(config.tenToneText)
+			}
 			if (c === 1) {
 				output.push(config.oneToneText)
 			} else if (c === 4) {
@@ -86,7 +81,7 @@ export function readThreeDigits(
 		}
 		output.push(config.oddText)
 	}
-	output.push(...readLastTwoDigits(config, b, c, false))
+	output.push(...readLastTwoDigits(config, b, c))
 	return output
 }
 
@@ -111,34 +106,35 @@ export function removeThousandsSeparators(config: ReadingConfig, number: string)
  */
 export function trimRedundantZeros(config: ReadingConfig, number: string): string {
 	return number.includes(config.pointSign)
-		? trimLeft(trimRight(number, config.filledDigit), config.filledDigit)
-		: trimLeft(number, config.filledDigit)
+		? trimLeft(trimRight(number, ReadingConfig.FILLED_DIGIT), ReadingConfig.FILLED_DIGIT)
+		: trimLeft(number, ReadingConfig.FILLED_DIGIT)
 }
 
 /**
  * Add leading zeros to the number string so its length is a multiple of the period size.
  *
- * @param config the reading configuration
  * @param number the number string
  * @returns the number string with leading zeros added
  */
-export function addLeadingZerosToFitPeriod(config: ReadingConfig, number: string): string {
-	const newLength = Math.ceil(number.length / config.periodSize) * config.periodSize
-	return number.padStart(newLength, config.filledDigit)
+export function addLeadingZerosToFitPeriod(number: string): string {
+	const newLength = Math.ceil(number.length / ReadingConfig.PERIOD_SIZE) * ReadingConfig.PERIOD_SIZE
+	return number.padStart(newLength, ReadingConfig.FILLED_DIGIT)
 }
 
 /**
  * Group the digits in the integral part into periods of three digits each.
  *
- * @param config the reading configuration
  * @param digits the digits in the integral part
  * @returns an array of periods
  */
-export function zipIntegralPeriods(config: ReadingConfig, digits: Digit[]): Period[] {
+export function zipIntegralPeriods(digits: Digit[]): Period[] {
 	const output: Period[] = []
-	const periodCount = Math.ceil(digits.length / config.periodSize)
+	const periodCount = Math.ceil(digits.length / ReadingConfig.PERIOD_SIZE)
 	for (let i = 0; i < periodCount; i++) {
-		const [a, b, c] = digits.slice(i * config.periodSize, (i + 1) * config.periodSize)
+		const [a, b, c] = digits.slice(
+			i * ReadingConfig.PERIOD_SIZE,
+			(i + 1) * ReadingConfig.PERIOD_SIZE
+		)
 		output.push([a, b, c])
 	}
 	return output
@@ -162,7 +158,7 @@ export function parseNumberData(config: ReadingConfig, number: string): NumberDa
 	const pointPos = numberString.indexOf(config.pointSign)
 	let integralString = pointPos === -1 ? numberString : numberString.substring(0, pointPos)
 	const fractionalString = pointPos === -1 ? '' : numberString.substring(pointPos + 1)
-	integralString = addLeadingZerosToFitPeriod(config, integralString)
+	integralString = addLeadingZerosToFitPeriod(integralString)
 
 	const integralDigits = splitToDigits(integralString)
 	const fractionalDigits = splitToDigits(fractionalString)
@@ -173,7 +169,7 @@ export function parseNumberData(config: ReadingConfig, number: string): NumberDa
 		throw new InvalidNumberError('Invalid fractional part')
 	}
 
-	const integralPart = zipIntegralPeriods(config, integralDigits)
+	const integralPart = zipIntegralPeriods(integralDigits)
 	if (integralPart.length === 0) {
 		integralPart.push([0, 0, 0])
 	}
@@ -221,7 +217,10 @@ export function readFractionalPart(config: ReadingConfig, digits: Digit[]): stri
 	switch (digits.length) {
 		case 2: {
 			const [b, c] = digits
-			output.push(...readLastTwoDigits(config, b, c, true))
+			if (b === 0 && c !== 0) {
+				output.push(config.digits[b])
+			}
+			output.push(...readLastTwoDigits(config, b, c))
 			break
 		}
 		case 3: {
@@ -256,17 +255,20 @@ export function readNumber(config: ReadingConfig, numberData: NumberData): strin
 		output.unshift(config.negativeText)
 	}
 	output.push(...config.unit)
-	return output.join(config.separator)
+	return output.filter((value) => value !== '').join(config.separator)
 }
 
 /**
  * Validate, parse, and read the input number.
  *
- * @param config the reading configuration
  * @param number the input number
+ * @param config the reading configuration
  * @returns a string representation of the number
  */
-export function doReadNumber(config: ReadingConfig, number: InputNumber): string {
+export function doReadNumber(
+	number: InputNumber,
+	config: ReadingConfig = new ReadingConfig()
+): string {
 	const validatedNumber = validateNumber(number)
 	const numberData = parseNumberData(config, validatedNumber)
 	return readNumber(config, numberData)

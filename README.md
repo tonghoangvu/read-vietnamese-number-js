@@ -56,12 +56,7 @@ Cách sử dụng gồm 3 bước:
 ### Code example
 
 ```js
-import {
-  InvalidFormatError,
-  InvalidNumberError,
-  ReadingConfig,
-  doReadNumber,
-} from 'read-vietnamese-number' // or CDN URL
+import { InvalidNumberError, ReadingConfig, doReadNumber } from 'read-vietnamese-number' // or CDN URL
 
 // Config reading options
 const config = new ReadingConfig()
@@ -70,27 +65,28 @@ config.unit = ['đồng']
 try {
   // Start reading
   const number = '-12345.6789'
-  const result = doReadNumber(config, number)
+  const result = doReadNumber(number, config)
   console.log(result)
 } catch (err) {
   // Handle errors
-  if (err instanceof InvalidFormatError) {
-    console.error('Định dạng input không hợp lệ')
-  } else if (err instanceof InvalidNumberError) {
+  if (err instanceof InvalidNumberError) {
     console.error('Số không hợp lệ')
+  } else {
+    console.error(err)
   }
 }
 ```
 
 ### Error handling
 
-Thư viện ném ra 2 loại `RvnError` sau nếu có lỗi trong quá trình đọc số:
+Thư viện ném ra 2 loại `ReadVietnameseNumberError` sau nếu có lỗi trong quá trình đọc số:
 
-- `InvalidFormatError` khi input không hợp lệ
+- `TypeError` khi input không hợp lệ
 - `InvalidNumberError` khi số chứa ký tự không hợp lệ
 
-Hàm `doReadNumber()` chấp nhận input là `string` và `bigint`, ném `InvalidFormatError` với các trường hợp khác.
+Hàm `doReadNumber()` chấp nhận input là `string` và `bigint`, ném `TypeError` với các trường hợp khác.
 Hành vi này liên quan đến các vấn đề định dạng số của JavaScript (tràn số, mất độ chính xác,...).
+Đây là error hoàn toàn tránh được ở runtime nếu type của input là `string` hoặc `bigint`.
 
 Từ version 2.2.0, thư viện hỗ trợ đọc số với độ lớn không giới hạn.
 Nên nâng cấp lên version này để tránh các vấn đề khi đọc số lớn (issue [#38](https://github.com/tonghoangvu/read-vietnamese-number-js/issues/38)).

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { InvalidFormatError, InvalidNumberError, NumberData, ReadingConfig } from '../src/type.js'
+import { InvalidNumberError, NumberData, ReadingConfig } from '../src/type.js'
 import {
 	addLeadingZerosToFitPeriod,
 	doReadNumber,
@@ -19,35 +19,28 @@ describe('Read the last two digits function', () => {
 	config.unit = []
 
 	it('Should return without zero ten', () => {
-		expect(readLastTwoDigits(config, 0, 0, false)).toEqual(['không'])
-		expect(readLastTwoDigits(config, 0, 3, false)).toEqual(['ba'])
+		expect(readLastTwoDigits(config, 0, 0)).toEqual(['không'])
+		expect(readLastTwoDigits(config, 0, 3)).toEqual(['ba'])
 
-		expect(readLastTwoDigits(config, 1, 5, false)).toEqual(['mười', 'lăm'])
-		expect(readLastTwoDigits(config, 1, 6, false)).toEqual(['mười', 'sáu'])
-		expect(readLastTwoDigits(config, 1, 0, false)).toEqual(['mười'])
+		expect(readLastTwoDigits(config, 1, 5)).toEqual(['mười', 'lăm'])
+		expect(readLastTwoDigits(config, 1, 6)).toEqual(['mười', 'sáu'])
+		expect(readLastTwoDigits(config, 1, 0)).toEqual(['mười'])
 
-		expect(readLastTwoDigits(config, 5, 1, false)).toEqual(['năm', 'mươi', 'mốt'])
-		expect(readLastTwoDigits(config, 5, 4, false)).toEqual(['năm', 'mươi', 'tư'])
-		expect(readLastTwoDigits(config, 4, 4, false)).toEqual(['bốn', 'mươi', 'tư'])
-		expect(readLastTwoDigits(config, 8, 5, false)).toEqual(['tám', 'mươi', 'lăm'])
-		expect(readLastTwoDigits(config, 8, 2, false)).toEqual(['tám', 'mươi', 'hai'])
-		expect(readLastTwoDigits(config, 8, 0, false)).toEqual(['tám', 'mươi'])
+		expect(readLastTwoDigits(config, 5, 1)).toEqual(['năm', 'mươi', 'mốt'])
+		expect(readLastTwoDigits(config, 5, 4)).toEqual(['năm', 'mươi', 'tư'])
+		expect(readLastTwoDigits(config, 4, 4)).toEqual(['bốn', 'mươi', 'tư'])
+		expect(readLastTwoDigits(config, 8, 5)).toEqual(['tám', 'mươi', 'lăm'])
+		expect(readLastTwoDigits(config, 8, 2)).toEqual(['tám', 'mươi', 'hai'])
+		expect(readLastTwoDigits(config, 8, 0)).toEqual(['tám', 'mươi'])
 	})
 
-	it('Should return with zero ten', () => {
-		expect(readLastTwoDigits(config, 0, 0, true)).toEqual(['không'])
-		expect(readLastTwoDigits(config, 0, 3, true)).toEqual(['không', 'ba'])
+	it('Should return without ten tone', () => {
+		const config = new ReadingConfig()
+		config.skipTenTone = true
 
-		expect(readLastTwoDigits(config, 1, 5, true)).toEqual(['mười', 'lăm'])
-		expect(readLastTwoDigits(config, 1, 6, true)).toEqual(['mười', 'sáu'])
-		expect(readLastTwoDigits(config, 1, 0, true)).toEqual(['mười'])
-
-		expect(readLastTwoDigits(config, 5, 1, true)).toEqual(['năm', 'mươi', 'mốt'])
-		expect(readLastTwoDigits(config, 5, 4, true)).toEqual(['năm', 'mươi', 'tư'])
-		expect(readLastTwoDigits(config, 4, 4, true)).toEqual(['bốn', 'mươi', 'tư'])
-		expect(readLastTwoDigits(config, 8, 5, true)).toEqual(['tám', 'mươi', 'lăm'])
-		expect(readLastTwoDigits(config, 8, 2, true)).toEqual(['tám', 'mươi', 'hai'])
-		expect(readLastTwoDigits(config, 8, 0, true)).toEqual(['tám', 'mươi'])
+		expect(readLastTwoDigits(config, 9, 0)).toEqual(['chín', 'mươi'])
+		expect(readLastTwoDigits(config, 9, 3)).toEqual(['chín', 'ba'])
+		expect(readLastTwoDigits(config, 9, 5)).toEqual(['chín', 'lăm'])
 	})
 })
 
@@ -108,34 +101,28 @@ describe('Trim redundant zeros function', () => {
 })
 
 describe('Add leading zeros to fit period function', () => {
-	const config = new ReadingConfig()
-	config.unit = []
-
 	it('Should not change', () => {
-		expect(addLeadingZerosToFitPeriod(config, '')).toBe('')
-		expect(addLeadingZerosToFitPeriod(config, '257')).toBe('257')
-		expect(addLeadingZerosToFitPeriod(config, '123456')).toBe('123456')
+		expect(addLeadingZerosToFitPeriod('')).toBe('')
+		expect(addLeadingZerosToFitPeriod('257')).toBe('257')
+		expect(addLeadingZerosToFitPeriod('123456')).toBe('123456')
 	})
 
 	it('Should have the length divisible by 3', () => {
-		expect(addLeadingZerosToFitPeriod(config, '1')).toBe('001')
-		expect(addLeadingZerosToFitPeriod(config, '23')).toBe('023')
-		expect(addLeadingZerosToFitPeriod(config, '1234')).toBe('001234')
-		expect(addLeadingZerosToFitPeriod(config, '12345')).toBe('012345')
+		expect(addLeadingZerosToFitPeriod('1')).toBe('001')
+		expect(addLeadingZerosToFitPeriod('23')).toBe('023')
+		expect(addLeadingZerosToFitPeriod('1234')).toBe('001234')
+		expect(addLeadingZerosToFitPeriod('12345')).toBe('012345')
 	})
 })
 
 describe('Zip integral digits function', () => {
-	const config = new ReadingConfig()
-	config.unit = []
-
 	it('Should return no period', () => {
-		expect(zipIntegralPeriods(config, [])).toEqual([])
+		expect(zipIntegralPeriods([])).toEqual([])
 	})
 
 	it('Should return one period with zeros', () => {
-		expect(zipIntegralPeriods(config, [1, 2, 3])).toEqual([[1, 2, 3]])
-		expect(zipIntegralPeriods(config, [1, 2, 3, 4, 5, 6])).toEqual([
+		expect(zipIntegralPeriods([1, 2, 3])).toEqual([[1, 2, 3]])
+		expect(zipIntegralPeriods([1, 2, 3, 4, 5, 6])).toEqual([
 			[1, 2, 3],
 			[4, 5, 6],
 		])
@@ -249,65 +236,69 @@ describe('Do read number function', () => {
 	const config = new ReadingConfig()
 	config.unit = []
 
-	it('Should throw InvalidFormatError', () => {
-		expect(() => doReadNumber(config, null as any as string)).toThrow(InvalidFormatError)
-		expect(() => doReadNumber(config, -0.12345 as any as string)).toThrow(InvalidFormatError)
+	it('Should throw TypeError', () => {
+		expect(() => doReadNumber(null as any as string, config)).toThrow(TypeError)
+		expect(() => doReadNumber(-0.12345 as any as string, config)).toThrow(TypeError)
 		expect(() =>
 			// eslint-disable-next-line no-loss-of-precision
-			doReadNumber(config, -1234567890123456789012 as any as string)
-		).toThrow(InvalidFormatError)
+			doReadNumber(-1234567890123456789012 as any as string, config)
+		).toThrow(TypeError)
 	})
 
 	it('Should throw InvalidNumberError', () => {
-		expect(() => doReadNumber(config, '1..23')).toThrow(InvalidNumberError)
-		expect(() => doReadNumber(config, '--1.23')).toThrow(InvalidNumberError)
-		expect(() => doReadNumber(config, '12_3')).toThrow(InvalidNumberError)
-		expect(() => doReadNumber(config, 'abc123')).toThrow(InvalidNumberError)
+		expect(() => doReadNumber('1..23', config)).toThrow(InvalidNumberError)
+		expect(() => doReadNumber('--1.23', config)).toThrow(InvalidNumberError)
+		expect(() => doReadNumber('12_3', config)).toThrow(InvalidNumberError)
+		expect(() => doReadNumber('abc123', config)).toThrow(InvalidNumberError)
 	})
 
 	it('Should return zero', () => {
-		expect(doReadNumber(config, '')).toBe('không')
-		expect(doReadNumber(config, '0')).toBe('không')
-		expect(doReadNumber(config, '000')).toBe('không')
-		expect(doReadNumber(config, '00.')).toBe('không')
-		expect(doReadNumber(config, '.00')).toBe('không')
-		expect(doReadNumber(config, '000.00')).toBe('không')
+		expect(doReadNumber('', config)).toBe('không')
+		expect(doReadNumber('0', config)).toBe('không')
+		expect(doReadNumber('000', config)).toBe('không')
+		expect(doReadNumber('00.', config)).toBe('không')
+		expect(doReadNumber('.00', config)).toBe('không')
+		expect(doReadNumber('000.00', config)).toBe('không')
 	})
 
 	it('Should return integer value', () => {
-		expect(doReadNumber(config, '02')).toBe('hai')
-		expect(doReadNumber(config, '15')).toBe('mười lăm')
-		expect(doReadNumber(config, '321')).toBe('ba trăm hai mươi mốt')
-		expect(doReadNumber(config, '4065')).toBe('bốn nghìn không trăm sáu mươi lăm')
-		expect(doReadNumber(config, '06000')).toBe('sáu nghìn')
-		expect(doReadNumber(config, '1000024')).toBe('một triệu không trăm hai mươi tư')
-		expect(doReadNumber(config, '23010000')).toBe('hai mươi ba triệu không trăm mười nghìn')
-		expect(doReadNumber(config, '2030000305')).toBe(
+		expect(doReadNumber('02', config)).toBe('hai')
+		expect(doReadNumber('15', config)).toBe('mười lăm')
+		expect(doReadNumber('321', config)).toBe('ba trăm hai mươi mốt')
+		expect(doReadNumber('4065', config)).toBe('bốn nghìn không trăm sáu mươi lăm')
+		expect(doReadNumber('06000', config)).toBe('sáu nghìn')
+		expect(doReadNumber('1000024', config)).toBe('một triệu không trăm hai mươi tư')
+		expect(doReadNumber('23010000', config)).toBe('hai mươi ba triệu không trăm mười nghìn')
+		expect(doReadNumber('2030000305', config)).toBe(
 			'hai tỉ không trăm ba mươi triệu ba trăm lẻ năm'
 		)
-		expect(doReadNumber(config, '00,123,456')).toBe(
+		expect(doReadNumber('00,123,456', config)).toBe(
 			'một trăm hai mươi ba nghìn bốn trăm năm mươi sáu'
 		)
-		expect(doReadNumber(config, '1,200,000,000,000')).toBe('một nghìn hai trăm tỉ')
-		expect(doReadNumber(config, '1,200,300,000,000,000')).toBe(
+		expect(doReadNumber('1,200,000,000,000', config)).toBe('một nghìn hai trăm tỉ')
+		expect(doReadNumber('1,200,300,000,000,000', config)).toBe(
 			'một triệu hai trăm nghìn ba trăm tỉ'
 		)
-		expect(doReadNumber(config, '1,200,300,400,000,000,000')).toBe(
+		expect(doReadNumber('1,200,300,400,000,000,000', config)).toBe(
 			'một tỉ hai trăm triệu ba trăm nghìn bốn trăm tỉ'
 		)
-		expect(doReadNumber(config, '12,345,678,900,000,000,000')).toBe(
+		expect(doReadNumber('12,345,678,900,000,000,000', config)).toBe(
 			'mười hai tỉ ba trăm bốn mươi lăm triệu sáu trăm bảy mươi tám nghìn chín trăm tỉ'
 		)
 	})
 
 	it('Should return double value', () => {
-		expect(doReadNumber(config, '304.23')).toBe('ba trăm lẻ bốn chấm hai mươi ba')
-		expect(doReadNumber(config, '-0003.804')).toBe('âm ba chấm tám trăm lẻ bốn')
-		expect(doReadNumber(config, '-0.00001')).toBe('âm không chấm không không không không một')
-		expect(doReadNumber(config, '-123,456.7,89')).toBe(
+		expect(doReadNumber('304.23', config)).toBe('ba trăm lẻ bốn chấm hai mươi ba')
+		expect(doReadNumber('-0003.804', config)).toBe('âm ba chấm tám trăm lẻ bốn')
+		expect(doReadNumber('-0.00001', config)).toBe('âm không chấm không không không không một')
+		expect(doReadNumber('-123,456.7,89', config)).toBe(
 			'âm một trăm hai mươi ba nghìn bốn trăm năm mươi sáu chấm bảy trăm tám mươi chín'
 		)
-		expect(doReadNumber(config, '000100.01')).toBe('một trăm chấm không một')
-		expect(doReadNumber(config, '000100.10')).toBe('một trăm chấm một')
+		expect(doReadNumber('000100.01', config)).toBe('một trăm chấm không một')
+		expect(doReadNumber('000100.10', config)).toBe('một trăm chấm một')
+	})
+
+	it('Should use the default reading config', () => {
+		expect(doReadNumber('100')).toBe('một trăm đơn vị')
 	})
 })
