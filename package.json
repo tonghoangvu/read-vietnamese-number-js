@@ -1,7 +1,7 @@
 {
 	"name": "read-vietnamese-number",
 	"description": "Convert numbers to text in Vietnamese",
-	"version": "2.3.0",
+	"version": "2.3.1",
 	"license": "MIT",
 	"scripts": {
 		"verify": "npm run lint && npm run test && npm run build",
