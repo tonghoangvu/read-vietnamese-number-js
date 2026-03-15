@@ -33,7 +33,9 @@
 		"dist",
 		"!*.tsbuildinfo"
 	],
-	"bin": "./bin/cli.js",
+	"bin": {
+		"read-vietnamese-number": "bin/cli.js"
+	},
 	"type": "module",
 	"types": "./dist/cjs/index.d.ts",
 	"main": "./dist/cjs/index.js",
@@ -58,7 +60,7 @@
 	"sideEffects": false,
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/tonghoangvu/read-vietnamese-number-js"
+		"url": "git+https://github.com/tonghoangvu/read-vietnamese-number-js.git"
 	},
 	"homepage": "https://tonghoangvu.github.io/read-vietnamese-number-js/",
 	"author": {
