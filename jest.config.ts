@@ -26,6 +26,10 @@ const config: Config = {
 			},
 		],
 	},
+	testEnvironment: 'node',
+	testEnvironmentOptions: {
+		globalsCleanup: 'on',
+	},
 }
 
 export default config
