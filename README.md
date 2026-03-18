@@ -56,7 +56,11 @@ Cách sử dụng gồm 3 bước:
 ### Code example
 
 ```js
-import { InvalidNumberError, ReadingConfig, doReadNumber } from 'read-vietnamese-number' // or CDN URL
+import {
+  InvalidNumberError,
+  ReadingConfig,
+  doReadNumber,
+} from 'read-vietnamese-number' // or CDN URL
 
 // Config reading options
 const config = new ReadingConfig()
