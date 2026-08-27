@@ -118,7 +118,8 @@ export function trimRedundantZeros(config: ReadingConfig, number: string): strin
  */
 export function addLeadingZerosToFitPeriod(number: string): string {
 	const newLength = Math.ceil(number.length / ReadingConfig.PERIOD_SIZE) * ReadingConfig.PERIOD_SIZE
-	return number.padStart(newLength, ReadingConfig.FILLED_DIGIT)
+	const zerosCount = newLength - number.length
+	return ReadingConfig.FILLED_DIGIT.repeat(zerosCount) + number
 }
 
 /**

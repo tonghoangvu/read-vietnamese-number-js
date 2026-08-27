@@ -47,7 +47,7 @@ export function splitToDigits(str: string): Digit[] | null {
 		const value = parseInt(digit, 10)
 		return isNaN(value) || value < 0 || value > 9 ? null : value
 	})
-	return digits.includes(null) ? null : (digits as Digit[])
+	return digits.indexOf(null) !== -1 ? null : (digits as Digit[])
 }
 
 /**
